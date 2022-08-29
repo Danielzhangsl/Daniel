@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .box {
+            width: 300px;
+            height: 400px;
+            position: relative;
+            margin: auto;
+        }
+           .pics{
+            width: 300px;
+            height: 400px;
+           }
+        ul,ol {
+            list-style: none;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        .box .pics li {
+            width: 300px;
+            height: 400px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+
+        .box .pics .current {
+            display: block;
+        }
+
+        .box .btn a {
+            position: absolute;
+            top: 50%;
+            margin-top: -20px;
+            width: 40px;
+            height: 40px;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            text-align: center;
+            line-height: 40px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .box .btn .left-btn {
+            left: 20px;
+        }
+
+        .box .btn .right-btn {
+            right: 20px;
+        }
+
+        .box .btn:hover {
+            cursor: pointer;
+        }
+        .box .btn a:hover{
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+         .sub{
+            position:absolute;
+            bottom: 30px;
+            left: 74px;
+            width: 150px;
+         }
+        .sub li {
+            float: left;
+            width: 10px;
+            height: 10px;
+            margin: 0 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .sub .current {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 主体 -->
+    <div class="box" id="box">
+        <!-- 图片 -->
+        <ul class="pics" id="pics">
+            <li class="current"><img src="./img/1.jpg"></li>
+            <li><img src="./img/2.jpg"></li>
+            <li><img src="./img/3.jpg"></li>
+            <li><img src="./img/4.jpg"></li>
+            <li><img src="./img/5.jpg"></li>
+        </ul>
+        <!-- 按钮 -->
+        <div class="btn">
+            <a href="###" class="left-btn" id="left-btn"><</a>
+            <a href="###" class="right-btn" id="right-btn">></a>
+        </div>
+        <!-- 小圆点 -->
+        <ol class="sub" id="sub">
+            <li class="current"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+    </div>
+    <script>
+    var box=document.getElementById("box")
+    var pics=document.getElementById("pics")
+    var imgs=pics.getElementsByTagName("li")
+    var sub=document.getElementById("sub")
+    var subs=sub.children
+    var btn1=document.getElementById("left-btn")
+    var btnr=document.getElementById("right-btn")
+    var n=0;
+    // 1.右按钮点击切换
+    btnr.onclick=rightRun;
+    // 2.左边切换
+    btn1.onclick=function(){
+        n--;
+        if(n<0){
+              n=imgs.length-1;
+        }
+        change();
+    }
+    // 自动轮播
+    var timer=setInterval(rightRun,1000)
+    // 鼠标移入
+    box.onmouseover=function(){
+        clearInterval(timer)
+    }
+    // 鼠标移出，重新开始轮播
+    box.onmouseleave=function(){
+        timer=setInterval(rightRun,1000)
+    }
+    // 小圆点切换
+    for(var i=0;i<subs.length;i++){
+        (function(i){
+       subs[i].onclick=function(){
+        n=i;
+        change()
+       }
+    })(i)
+    }
+    function rightRun(){
+        n++;
+        if(n>imgs.length-1){
+             n=0;
+        }
+        change();
+    }
+    function change(){
+        for(var i=0;i<=imgs.length-1;i++){
+              imgs[i].className="";
+              subs[i].className="";
+        }
+        imgs[n].className="current";
+        subs[n].className="current";
+
+    }
+    </script>
+</body>
+
+</html>
